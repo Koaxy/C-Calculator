@@ -44,14 +44,64 @@ int CalcQueue::pushIntToQueue(int value)
 
 std::string CalcQueue::PushStringToQueue(std::string string)
 {
-    return std::string();
+   // Pushing String to Queue (Hopefully completed in the next commit)
+    if (this->isPriority)
+    {
+        this->StringQueuePriority.push(string);
+        std::printf("Koaxy -> Is a Priority Pushing the queue...\n");
+        string = this->StringQueuePriority.top();
+        this->StringQueuePriority.pop();
+        return string;
+    }
+    else
+    {
+        std::printf("Koaxy -> Isn't Priority Pushing Normal Queue (Not Priority) \n");
+        this->StringQueue.push(string);
+        string = this->StringQueue.front();
+        this->StringQueue.pop();
+
+    }
+
 }
 
 bool CalcQueue::pushBoolToQueue(bool value)
 {
-    return false;
+    if (this->isPriority)
+    {
+        std::printf("Koaxy -> Is a Priority Pushing the queue...\n");
+        this->BoolQueuePriority.push(value);
+        value = this->BoolQueuePriority.top();
+        if (this->BoolQueuePriority.size() == 1)
+        {
+            this->BoolQueue.pop();
+        }
+        return value;
+    }
+    else
+    {
+        std::printf("Koaxy -> Isn't Priority Pushing Normal Queue (Not Priority) \n");
+        this->BoolQueue.push(value);
+        value = this->BoolQueue.front();
+        if (this->BoolQueue.size() == 1)
+        {
+            this->BoolQueue.pop();
+        }
+        return value;
+    }
 }
 
 void CalcQueue::ClearAllQueues()
 {
+    if (isPriority)
+    {
+        this->StringQueuePriority.pop();
+        this->BoolQueuePriority.pop();
+        this->IntQueuePriority.pop();
+    }                                   // Pop priority queues
+    else
+    {
+        this->StringQueue.pop();
+        this->BoolQueue.pop();
+        this->IntQueue.pop();
+    }
 }
